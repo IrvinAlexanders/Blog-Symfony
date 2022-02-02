@@ -1,1 +1,1 @@
-# blog_aplyca
+# Symfony Blog
