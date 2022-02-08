@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} - Ver Entrada{% endblock %}
+
+{% block body %}
+    
+    <div class="container">
+        <h3 class="text-center">
+            {{entrada.title | upper() }}
+
+            {% if app.user and app.user.id == entrada.user.id %}
+                <a class="btn btn-outline-primary ml-4" href="{{ path('edit_entry', {entrada_id:entrada.id}) }}">Editar</a>
+            {% endif %}
+        </h3>
+        <h4 class="text-center">
+            {{entrada.subtitle | upper() }}
+        </h4>
+        
+        <img src="{{ asset('uploads/images_blogs_entrities/' ~ (entrada.image != '' ? entrada.image : 'empty.png') ) }}" class="img-thumbnail mx-auto d-block mb-4" style="max-width:60%" />
+        <strong>Autor: </strong><span>{{entrada.user.name}}</span><br />
+        <strong>Fecha: </strong><span>{{entrada.date | date('Y-m-d')}}</span><br />
+        <p>{{entrada.text}}</p>
+
+        <strong>Resumen: </strong>
+        <p>{{entrada.sumary}}</p>
+    </div>
+
+{% endblock %}

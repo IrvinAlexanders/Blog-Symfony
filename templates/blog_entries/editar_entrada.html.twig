@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} - Editar Entrada{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <h3 class="text-center">
+                <a class="btn btn-outline-danger mr-4" onclick="javascript:window.history.back();">Volver</a>
+                Editar Entrada
+            </h3>
+            
+            {{ form(formulario) }}
+        </div>
+
+        <div class="col-12 col-md-9" id="space-entry-preview">
+            <h3 class="text-center">{{entrada.title | upper()}}</h3>
+    
+            <img src="{{ asset('uploads/images_blogs_entrities/' ~ (entrada.image != '' ? entrada.image : 'empty.png') ) }}" class="img-thumbnail mx-auto d-block mb-4" style="max-width:60%" />
+            <strong>Autor: </strong><span>{{entrada.user.name}}</span><br />
+            <strong>Fecha: </strong><span>{{entrada.date | date('Y-m-d')}}</span><br />
+            <p>{{entrada.text}}</p>
+        </div>
+    </div>
+    
+{% endblock %}

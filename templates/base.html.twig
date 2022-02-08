@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Aplyca{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+
+        
+        {% block stylesheets %}
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="{{ asset('vistas/css/bootstrap.min.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+            <script src="{{ asset('vistas/js/jquery-3.6.0.min.js') }}"></script>
+            {# <script src="{{ asset('vistas/js/jquery-3.5.1.slim.min.js') }}"></script> #}
+            <script src="{{ asset('vistas/js/bootstrap.bundle.min.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{ path('home') }}">Blog Aplyca</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ path('home') }}">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('blog') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('contact') }}">Contacto</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ app.user.name ?? 'Invitado' }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if app.user %}
+                                    <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Salir</a>
+                                {% else %}
+                                    <a class="dropdown-item text-info" href="{{ path('app_login') }}">Ingreso</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-warning" href="{{ path('registro') }}">Registro</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

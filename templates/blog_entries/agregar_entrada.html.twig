@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} - Ingresar Entrada{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Nueva Entrada</h1>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {{ form(formulario) }}
+    </div>
+{% endblock %}

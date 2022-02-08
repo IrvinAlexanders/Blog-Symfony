@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} - Contacto{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="h3 mb-3 font-weight-normal text-center">Contacto</h1>
+
+        {% for message in app.flashes('correcto') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {{ form(formulario)}}
+    </div>
+{% endblock %}

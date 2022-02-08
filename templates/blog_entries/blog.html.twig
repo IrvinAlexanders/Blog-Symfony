@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} - Blog{% endblock %}
+
+{% block body %}        
+    {% if list == 'mis-entradas' %}
+        {% set titulo = 'Mis Entradas' %}
+        {% set subtitulo = {text:'Ver todas', enlace:'todo'} %}
+    {% else %}
+        {% set titulo = 'Entradas' %}
+        {% set subtitulo = {text:'Ver mias', enlace:'mis-entradas'} %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <h3 class="text-center">{{titulo}}
+                {% if app.user %}
+                    <a class="text-danger" href="{{ path('new_entries') }}" title="agregar entrada">+</a>
+                {% endif %}
+            </h3>
+            <h6 class="text-center">
+                <a class="text-info" href="{{ path('blog', {list:subtitulo.enlace}) }}" title="filtrar entradas">{{subtitulo.text}}</a>
+            </h6>
+            {# total items count #}
+            <div class="count">
+                Total: {{ pagination.getTotalItemCount }}
+            </div>
+            <div>
+                
+            </div>
+
+            {% if pagination.getTotalItemCount > 0 %}
+                <table class="table table-sm">
+                    {# <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Ver</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead> #}
+                    <tbody>
+                        {% for article in pagination %}
+                            <tr>
+                                <td>
+                                    <a href="#!" class="view-entry-preview" entry_id="{{ article.id }}" entry_title="{{ article.title }}" entry_subtitle="{{ article.subtitle }}" entry_text="{{ article.text }}" entry_image="{{ article.image }}" entry_date="{{ article.date | date('Y-m-d') }}" entry_autor="{{ article.user_name }}" onClick="view_entry_preview(this); return false;" >{{ article.title }}</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('view_entry', {entrada_id:article.id}) }}" class="text-info" >Ver</a>
+                                </td>
+                                <td>
+                                    {% if app.user and app.user.id == article.user_id %}
+                                        <a href="{{ path('edit_entry', {entrada_id:article.id}) }}" class="text-warning" >Editar</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+
+            {% else %}
+                <div class="alert alert-warning">No se encontraron entradas</div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 col-md-9" id="space-entry-preview">
+            
+        </div>
+    </div>
+
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent()}}
+    <script src="{{ asset('vistas/js/blog.js') }}" type="text/javascript"></script>
+{% endblock %}
